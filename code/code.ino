@@ -1,3 +1,4 @@
+#include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 #include <TimeLib.h>
 #include <DS1307RTC.h>
@@ -8,12 +9,11 @@ const char *monthName[12] =
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 };
 
-// Testing
-
 tmElements_t tm;
 
 void setup()
 {
+  // Get and set current date
   bool parse=false;
   bool config=false;
 
@@ -26,6 +26,7 @@ void setup()
     }
   }
 
+  // Print current date to serial
   Serial.begin(9600);
   while (!Serial) ; // wait for Arduino Serial Monitor
   delay(200);
@@ -44,13 +45,14 @@ void setup()
     Serial.print(__DATE__);
     Serial.println("\"");
   }
+
+  
 }
 
 void loop()
 {
-  tmElements_t tm;
-
-  if (RTC.read(tm)) {
+  if (RTC.read(tm))
+  {
     Serial.print("Ok, Time = ");
     print2digits(tm.Hour);
     Serial.write(':');
