@@ -2,11 +2,13 @@
 #include <TimeLib.h>
 #include <DS1307RTC.h>
 
-const char *monthName[12] =
+const char *monthName[12] = 
 {
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 };
+
+// Testing
 
 tmElements_t tm;
 
