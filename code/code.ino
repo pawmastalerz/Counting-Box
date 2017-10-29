@@ -11,6 +11,10 @@ const char *monthName[12] = {
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 };
 
+const char *charToPrint[4] = {
+  "sekund", "minut", "godzin", "dni"
+};
+
 tmElements_t tm;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -66,8 +70,8 @@ void loop()
       
       lcd.setCursor(0,0);
       lcd.print(longToPrint(i));
-      //lcd.setCursor(0,1);
-      //lcd.print();
+      lcd.setCursor(0,1);
+      lcd.print(charToPrint[i]);
       delay(100);
     }
     lcd.clear();
