@@ -4,6 +4,8 @@
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
 
+volatile byte LCDBackLight = 0;
+
 const char *monthName[12] = {
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -13,12 +15,10 @@ tmElements_t tm;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-//long anniv = 1480298400;
 DateTime anniv (2016, 11, 28, 2, 0, 0);
 
 void setup() {
   lcd.begin();
-  lcd.backlight();
   
   bool parse=false;
   bool config=false;
@@ -50,10 +50,16 @@ void setup() {
     Serial.print(__DATE__);
     Serial.println("\"");
   }
+
+  attachInterrupt(digitalPinToInterrupt(2), switchBacklight, RISING);
 }
 
 void loop()
 {
+  if (LCDBackLight%2 == 0)
+    lcd.backlight();
+  else lcd.noBacklight();
+  
   for(int i = 0; i < 5; i++)
   {
     lcd.setCursor(0,0);
@@ -93,6 +99,11 @@ void loop()
     delay(1000);
   }
   lcd.clear();
+}
+
+void switchBacklight()
+{
+  LCDBackLight++;
 }
 
 bool getTime(const char *str)
