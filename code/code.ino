@@ -1,19 +1,23 @@
-#include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 #include <TimeLib.h>
 #include <DS1307RTC.h>
+#include <LiquidCrystal_I2C.h>
 
-const char *monthName[12] = 
-{
+const char *monthName[12] = {
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 };
 
 tmElements_t tm;
 
-void setup()
-{
-  // Get and set current date
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+long anniv = 1480298400;
+
+void setup() {
+  lcd.begin();
+  lcd.backlight();
+  
   bool parse=false;
   bool config=false;
 
@@ -26,7 +30,6 @@ void setup()
     }
   }
 
-  // Print current date to serial
   Serial.begin(9600);
   while (!Serial) ; // wait for Arduino Serial Monitor
   delay(200);
@@ -45,43 +48,38 @@ void setup()
     Serial.print(__DATE__);
     Serial.println("\"");
   }
-
 }
 
 void loop()
 {
-  printTimeToSerial();
+  for(int i = 0; i < 5; i++)
+  {
+    printSeconds();
+  }
+  lcd.clear();
+  for(int i = 0; i < 5; i++)
+  {
+    printMinutes();
+  }
+  lcd.clear();
+}
+
+void printSeconds()
+{
+  lcd.setCursor(0,0);
+  lcd.print(RTC.get() - anniv);
+  lcd.setCursor(0,1);
+  lcd.print("sekund");
   delay(1000);
 }
 
-void printTimeToSerial()
+void printMinutes()
 {
-  if (RTC.read(tm))
-  {
-    Serial.print("Ok, Time = ");
-    print2digits(tm.Hour);
-    Serial.write(':');
-    print2digits(tm.Minute);
-    Serial.write(':');
-    print2digits(tm.Second);
-    Serial.print(", Date (D/M/Y) = ");
-    Serial.print(tm.Day);
-    Serial.write('/');
-    Serial.print(tm.Month);
-    Serial.write('/');
-    Serial.print(tmYearToCalendar(tm.Year));
-    Serial.println();
-  } else {
-    if (RTC.chipPresent()) {
-      Serial.println("The DS1307 is stopped.  Please run the SetTime");
-      Serial.println("example to initialize the time and begin running.");
-      Serial.println();
-    } else {
-      Serial.println("DS1307 read error!  Please check the circuitry.");
-      Serial.println();
-    }
-    delay(9000);
-  }
+  lcd.setCursor(0,0);
+  lcd.print((RTC.get() - anniv) / 60);
+  lcd.setCursor(0,1);
+  lcd.print("minut");
+  delay(1000);
 }
 
 bool getTime(const char *str)
@@ -110,13 +108,5 @@ bool getDate(const char *str)
   tm.Month = monthIndex + 1;
   tm.Year = CalendarYrToTm(Year);
   return true;
-}
-
-void print2digits(int number)
-{
-  if (number >= 0 && number < 10) {
-    Serial.write('0');
-  }
-  Serial.print(number);
 }
 
