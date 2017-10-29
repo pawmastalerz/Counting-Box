@@ -56,49 +56,41 @@ void setup() {
 
 void loop()
 {
-  if (LCDBackLight%2 == 0)
-    lcd.backlight();
-  else lcd.noBacklight();
-  
-  for(int i = 0; i < 5; i++)
+  for(int i = 0; i < 4; i++)
   {
-    lcd.setCursor(0,0);
-    lcd.print(RTC.get() - anniv.unixtime());
-    lcd.setCursor(0,1);
-    lcd.print("sekund");
-    delay(1000);
+    for(int j = 0; j < 50; j++)
+    {
+      int pot = analogRead(A3);
+      if (pot > 385) lcd.backlight();
+      else lcd.noBacklight();
+      
+      lcd.setCursor(0,0);
+      lcd.print(longToPrint(i));
+      //lcd.setCursor(0,1);
+      //lcd.print();
+      delay(100);
+    }
+    lcd.clear();
   }
-  lcd.clear();
-  
-  for(int i = 0; i < 5; i++)
-  {
-    lcd.setCursor(0,0);
-    lcd.print((RTC.get() - anniv.unixtime()) / 60);
-    lcd.setCursor(0,1);
-    lcd.print("minut");
-    delay(1000);
-  }
-  lcd.clear();
+}
 
-  for(int i = 0; i < 5; i++)
+long longToPrint(int x)
+{
+  switch (x)
   {
-    lcd.setCursor(0,0);
-    lcd.print((RTC.get() - anniv.unixtime()) / 3600);
-    lcd.setCursor(0,1);
-    lcd.print("godzin");
-    delay(1000);
+    case 0:
+      return (RTC.get() - anniv.unixtime());
+      break;
+    case 1:
+      return ((RTC.get() - anniv.unixtime()) / 60);
+      break;
+    case 2:
+      return ((RTC.get() - anniv.unixtime()) / 3600);
+      break;
+    case 3:
+      return ((RTC.get() - anniv.unixtime()) / 86400);
+      break;
   }
-  lcd.clear();
-
-  for(int i = 0; i < 5; i++)
-  {
-    lcd.setCursor(0,0);
-    lcd.print((RTC.get() - anniv.unixtime()) / 86400);
-    lcd.setCursor(0,1);
-    lcd.print("dni");
-    delay(1000);
-  }
-  lcd.clear();
 }
 
 void switchBacklight()
