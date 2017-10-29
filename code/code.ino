@@ -46,10 +46,15 @@ void setup()
     Serial.println("\"");
   }
 
-  
 }
 
 void loop()
+{
+  printTimeToSerial();
+  delay(1000);
+}
+
+void printTimeToSerial()
 {
   if (RTC.read(tm))
   {
@@ -77,7 +82,6 @@ void loop()
     }
     delay(9000);
   }
-  delay(1000);
 }
 
 bool getTime(const char *str)
