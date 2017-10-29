@@ -54,8 +54,6 @@ void setup() {
     Serial.print(__DATE__);
     Serial.println("\"");
   }
-
-  attachInterrupt(digitalPinToInterrupt(2), switchBacklight, RISING);
 }
 
 void loop()
