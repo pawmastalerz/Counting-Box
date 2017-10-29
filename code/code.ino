@@ -2,6 +2,7 @@
 #include <TimeLib.h>
 #include <DS1307RTC.h>
 #include <LiquidCrystal_I2C.h>
+#include "RTClib.h"
 
 const char *monthName[12] = {
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -12,7 +13,8 @@ tmElements_t tm;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-long anniv = 1480298400;
+//long anniv = 1480298400;
+DateTime anniv (2016, 11, 28, 2, 0, 0);
 
 void setup() {
   lcd.begin();
@@ -54,32 +56,43 @@ void loop()
 {
   for(int i = 0; i < 5; i++)
   {
-    printSeconds();
+    lcd.setCursor(0,0);
+    lcd.print(RTC.get() - anniv.unixtime());
+    lcd.setCursor(0,1);
+    lcd.print("sekund");
+    delay(1000);
   }
   lcd.clear();
+  
   for(int i = 0; i < 5; i++)
   {
-    printMinutes();
+    lcd.setCursor(0,0);
+    lcd.print((RTC.get() - anniv.unixtime()) / 60);
+    lcd.setCursor(0,1);
+    lcd.print("minut");
+    delay(1000);
   }
   lcd.clear();
-}
 
-void printSeconds()
-{
-  lcd.setCursor(0,0);
-  lcd.print(RTC.get() - anniv);
-  lcd.setCursor(0,1);
-  lcd.print("sekund");
-  delay(1000);
-}
+  for(int i = 0; i < 5; i++)
+  {
+    lcd.setCursor(0,0);
+    lcd.print((RTC.get() - anniv.unixtime()) / 3600);
+    lcd.setCursor(0,1);
+    lcd.print("godzin");
+    delay(1000);
+  }
+  lcd.clear();
 
-void printMinutes()
-{
-  lcd.setCursor(0,0);
-  lcd.print((RTC.get() - anniv) / 60);
-  lcd.setCursor(0,1);
-  lcd.print("minut");
-  delay(1000);
+  for(int i = 0; i < 5; i++)
+  {
+    lcd.setCursor(0,0);
+    lcd.print((RTC.get() - anniv.unixtime()) / 86400);
+    lcd.setCursor(0,1);
+    lcd.print("dni");
+    delay(1000);
+  }
+  lcd.clear();
 }
 
 bool getTime(const char *str)
