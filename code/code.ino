@@ -23,6 +23,7 @@ DateTime anniv (2016, 11, 28, 2, 0, 0);
 
 void setup() {
   lcd.begin();
+  lcd.clear();
   
   bool parse=false;
   bool config=false;
@@ -47,12 +48,24 @@ void setup() {
   } else if (parse) {
     Serial.println("DS1307 Communication Error :-{");
     Serial.println("Please check your circuitry");
+    lcd.setCursor(0,0);
+    lcd.print("COMMUNICATION");
+    lcd.setCursor(0,1);
+    lcd.print("ERROR");
+    delay(3000);
+    setup();
   } else {
     Serial.print("Could not parse info from the compiler, Time=\"");
     Serial.print(__TIME__);
     Serial.print("\", Date=\"");
     Serial.print(__DATE__);
     Serial.println("\"");
+    lcd.setCursor(0,0);
+    lcd.print("CONFIG");
+    lcd.setCursor(0,1);
+    lcd.print("ERROR");
+    delay(3000);
+    setup();
   }
 }
 
