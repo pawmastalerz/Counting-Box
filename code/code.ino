@@ -19,12 +19,55 @@ tmElements_t tm;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-DateTime anniv (2016, 11, 28, 2, 0, 0);
+DateTime anniv (2016, 11, 02, 23, 0, 0);
 
 void setup() {
   lcd.begin();
   lcd.clear();
+  Serial.begin(9600);
+  setTimeAndDate();
+}
+
+void loop()
+{
+  RTC.read(tm);
+  lcd.setCursor(0,0);
+  lcd.print((tm.Year + 1970 - anniv.year()) * 12 + (tm.Month - anniv.month()) + dayCheck());
+  delay(1000);
+  lcd.clear();
   
+  /*for(int i = 0; i < 4; i++)
+  {
+    for(int j = 0; j < 50; j++)
+    {
+      int pot = analogRead(A3);
+      if (pot > 385) lcd.backlight();
+      else lcd.noBacklight();
+      
+      lcd.setCursor(0,0);
+      lcd.print(longToPrint(i));
+      lcd.setCursor(0,1);
+      lcd.print(charToPrint[i]);
+      delay(100);
+    }
+    lcd.clear();
+  }*/
+}
+
+short dayCheck()
+{
+  if (
+  ((tm.Day == anniv.day()) && (tm.Hour < anniv.hour())) ||
+  ((tm.Day < anniv.day()) && (tm.Hour >= anniv.hour())) ||
+  ((tm.Day < anniv.day()) && (tm.Hour < anniv.hour())) ||
+  ((tm.Day == anniv.day()) && (tm.Hour < anniv.hour()))
+  )
+    return -1;   
+  else return 0;
+}
+
+void setTimeAndDate()
+{
   bool parse=false;
   bool config=false;
 
@@ -37,7 +80,6 @@ void setup() {
     }
   }
 
-  Serial.begin(9600);
   while (!Serial) ; // wait for Arduino Serial Monitor
   delay(200);
   if (parse && config) {
@@ -66,26 +108,6 @@ void setup() {
     lcd.print("ERROR");
     delay(3000);
     setup();
-  }
-}
-
-void loop()
-{
-  for(int i = 0; i < 4; i++)
-  {
-    for(int j = 0; j < 50; j++)
-    {
-      int pot = analogRead(A3);
-      if (pot > 385) lcd.backlight();
-      else lcd.noBacklight();
-      
-      lcd.setCursor(0,0);
-      lcd.print(longToPrint(i));
-      lcd.setCursor(0,1);
-      lcd.print(charToPrint[i]);
-      delay(100);
-    }
-    lcd.clear();
   }
 }
 
