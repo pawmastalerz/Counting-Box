@@ -4,40 +4,35 @@
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
 
-volatile byte LCDBackLight = 0;
-
 const char *monthName[12] = {
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 };
 
-const char *charToPrint[4] = {
-  "sekund", "minut", "godzin", "dni"
+const char *charToPrint[6] = {
+  "sekund :D", "minut...", "godzin!", "dni :)", "miesiecy ^_^", "lat!"
 };
 
 tmElements_t tm;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-DateTime anniv (2016, 11, 02, 23, 0, 0);
+DateTime anniv (2016, 11, 02, 2, 0, 0);
 
 void setup() {
   lcd.begin();
   lcd.clear();
   Serial.begin(9600);
-  setTimeAndDate();
+  
+  //Uncomment the following function only to set the clock:
+  //setTimeAndDate();
 }
 
 void loop()
 {
-  RTC.read(tm);
-  lcd.setCursor(0,0);
-  lcd.print((tm.Year + 1970 - anniv.year()) * 12 + (tm.Month - anniv.month()) + dayCheck());
-  delay(1000);
-  lcd.clear();
-  
-  /*for(int i = 0; i < 4; i++)
+  for(int i = 0; i < 6; i++)
   {
+    RTC.read(tm);
     for(int j = 0; j < 50; j++)
     {
       int pot = analogRead(A3);
@@ -47,11 +42,13 @@ void loop()
       lcd.setCursor(0,0);
       lcd.print(longToPrint(i));
       lcd.setCursor(0,1);
-      lcd.print(charToPrint[i]);
+      if (longToPrint(i) == 1)
+        lcd.print("roku!");
+      else lcd.print(charToPrint[i]);
       delay(100);
     }
     lcd.clear();
-  }*/
+  }
 }
 
 short dayCheck()
@@ -111,7 +108,7 @@ void setTimeAndDate()
   }
 }
 
-long longToPrint(int x)
+unsigned long longToPrint(int x)
 {
   switch (x)
   {
@@ -127,12 +124,13 @@ long longToPrint(int x)
     case 3:
       return ((RTC.get() - anniv.unixtime()) / 86400);
       break;
+    case 4:
+      return (tm.Year + 1970 - anniv.year()) * 12 + (tm.Month - anniv.month()) + dayCheck();
+      break;
+    case 5:
+      return floor(((tm.Year + 1970 - anniv.year()) * 12 + (tm.Month - anniv.month()) + dayCheck()) / 12);
+      break;
   }
-}
-
-void switchBacklight()
-{
-  LCDBackLight++;
 }
 
 bool getTime(const char *str)
@@ -153,7 +151,8 @@ bool getDate(const char *str)
   uint8_t monthIndex;
 
   if (sscanf(str, "%s %d %d", Month, &Day, &Year) != 3) return false;
-  for (monthIndex = 0; monthIndex < 12; monthIndex++) {
+  for (monthIndex = 0; monthIndex < 12; monthIndex++)
+  {
     if (strcmp(Month, monthName[monthIndex]) == 0) break;
   }
   if (monthIndex >= 12) return false;
