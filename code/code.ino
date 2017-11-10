@@ -34,8 +34,6 @@ void loop()
     for(int j = 0; j < 50; j++)
     {
       int pot = analogRead(A3);
-      Serial.print(pot);
-      Serial.print("\n");
       if (pot > 370) lcd.backlight();
       else lcd.noBacklight();
       
@@ -88,7 +86,7 @@ unsigned long longToPrint(int x)
   }
 }
 
-bool getTime(const char *str)
+/*bool getTime(const char *str)
 {
   int Hour, Min, Sec;
 
@@ -115,4 +113,4 @@ bool getDate(const char *str)
   tm.Month = monthIndex + 1;
   tm.Year = CalendarYrToTm(Year);
   return true;
-}
+}*/
