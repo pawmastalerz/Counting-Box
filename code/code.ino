@@ -4,11 +4,6 @@
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
 
-const char *monthName[12] = {
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-};
-
 const char *charToPrint[6] = {
   "sekund :D", "minut...", "godzin d(\")b", "dni :)", "miesiecy ^_^", "lat!"
 };
