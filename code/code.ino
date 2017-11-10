@@ -10,22 +10,20 @@ const char *monthName[12] = {
 };
 
 const char *charToPrint[6] = {
-  "sekund :D", "minut...", "godzin!", "dni :)", "miesiecy ^_^", "lat!"
+  "sekund :D", "minut...", "godzin d(\")b", "dni :)", "miesiecy ^_^", "lat!"
 };
 
 tmElements_t tm;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-DateTime anniv (2016, 11, 02, 2, 0, 0);
+DateTime anniv (2016, 11, 28, 2, 0, 0);
 
-void setup() {
+void setup()
+{
   lcd.begin();
   lcd.clear();
   Serial.begin(9600);
-  
-  //Uncomment the following function only to set the clock:
-  //setTimeAndDate();
 }
 
 void loop()
@@ -36,7 +34,9 @@ void loop()
     for(int j = 0; j < 50; j++)
     {
       int pot = analogRead(A3);
-      if (pot > 385) lcd.backlight();
+      Serial.print(pot);
+      Serial.print("\n");
+      if (pot > 370) lcd.backlight();
       else lcd.noBacklight();
       
       lcd.setCursor(0,0);
@@ -61,51 +61,6 @@ short dayCheck()
   )
     return -1;   
   else return 0;
-}
-
-void setTimeAndDate()
-{
-  bool parse=false;
-  bool config=false;
-
-  // get the date and time the compiler was run
-  if (getDate(__DATE__) && getTime(__TIME__)) {
-    parse = true;
-    // and configure the RTC with this info
-    if (RTC.write(tm)) {
-      config = true;
-    }
-  }
-
-  while (!Serial) ; // wait for Arduino Serial Monitor
-  delay(200);
-  if (parse && config) {
-    Serial.print("DS1307 configured Time=");
-    Serial.print(__TIME__);
-    Serial.print(", Date=");
-    Serial.println(__DATE__);
-  } else if (parse) {
-    Serial.println("DS1307 Communication Error :-{");
-    Serial.println("Please check your circuitry");
-    lcd.setCursor(0,0);
-    lcd.print("COMMUNICATION");
-    lcd.setCursor(0,1);
-    lcd.print("ERROR");
-    delay(3000);
-    setup();
-  } else {
-    Serial.print("Could not parse info from the compiler, Time=\"");
-    Serial.print(__TIME__);
-    Serial.print("\", Date=\"");
-    Serial.print(__DATE__);
-    Serial.println("\"");
-    lcd.setCursor(0,0);
-    lcd.print("CONFIG");
-    lcd.setCursor(0,1);
-    lcd.print("ERROR");
-    delay(3000);
-    setup();
-  }
 }
 
 unsigned long longToPrint(int x)
@@ -161,4 +116,3 @@ bool getDate(const char *str)
   tm.Year = CalendarYrToTm(Year);
   return true;
 }
-
