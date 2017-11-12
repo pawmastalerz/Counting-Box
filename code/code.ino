@@ -1,8 +1,15 @@
-#include <Wire.h>
+//Arduino - based anniversary datetime counter.
+//
+//Make sure to run DS1307RTC :: SetTime first!
+//
+//All RIGHTS RESERVED to Pawel Mastalerz,
+//University of Warmia and Mazuria, Poland.
+
 #include <TimeLib.h>
 #include <DS1307RTC.h>
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
+
 
 const char *charToPrint[6] = {
   "sekund :D", "minut...", "godzin d(\")b", "dni :)", "miesiecy ^_^", "lat!"
@@ -12,6 +19,7 @@ tmElements_t tm;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
+//Put your anniversary date here (YYYY, MM, DD, HR, MN, SC):
 DateTime anniv (2016, 11, 28, 2, 0, 0);
 
 void setup()
@@ -29,6 +37,8 @@ void loop()
     for(int j = 0; j < 50; j++)
     {
       int pot = analogRead(A3);
+      //Make sure to adjust your potentiometer.
+      //Mine's max value is about 740.
       if (pot > 370) lcd.backlight();
       else lcd.noBacklight();
       
@@ -44,6 +54,7 @@ void loop()
   }
 }
 
+//Subtract 1 month if following conditions are met:
 short dayCheck()
 {
   if (
