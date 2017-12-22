@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.4.0">
+<eagle version="8.5.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -495,7 +495,7 @@ Based on  the following source:
 </classes>
 <parts>
 <part name="U$1" library="Arduino-clone" deviceset="NANO" device=""/>
-<part name="POT" library="pot" library_urn="urn:adsk.eagle:library:331" deviceset="3RP/1610N" device="" package3d_urn="urn:adsk.eagle:package:22726/1" value="1K"/>
+<part name="POT_SCREEN" library="pot" library_urn="urn:adsk.eagle:library:331" deviceset="3RP/1610N" device="" package3d_urn="urn:adsk.eagle:package:22726/1" value="1K"/>
 <part name="X1" library="con-berg" library_urn="urn:adsk.eagle:library:130" deviceset="PN87520" device="" package3d_urn="urn:adsk.eagle:package:6146/1"/>
 <part name="SDA1" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="SMD2" device="" package3d_urn="urn:adsk.eagle:package:30839/1"/>
 <part name="SDA2" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="SMD2" device="" package3d_urn="urn:adsk.eagle:package:30839/1"/>
@@ -505,24 +505,26 @@ Based on  the following source:
 <part name="5V2" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="SMD2" device="" package3d_urn="urn:adsk.eagle:package:30839/1"/>
 <part name="GND1" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="SMD2" device="" package3d_urn="urn:adsk.eagle:package:30839/1"/>
 <part name="GND2" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="SMD2" device="" package3d_urn="urn:adsk.eagle:package:30839/1"/>
+<part name="POT_MODE" library="pot" library_urn="urn:adsk.eagle:library:331" deviceset="3RP/1610N" device="" package3d_urn="urn:adsk.eagle:package:22726/1" value="1K"/>
 </parts>
 <sheets>
 <sheet>
 <plain>
-<text x="17.78" y="86.36" size="2.54" layer="97">LCD &amp; RTC</text>
+<text x="17.78" y="81.28" size="2.54" layer="97">LCD &amp; RTC</text>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="78.74" y="48.26"/>
-<instance part="POT" gate="G$1" x="-7.62" y="60.96" rot="R270"/>
+<instance part="POT_SCREEN" gate="G$1" x="-7.62" y="60.96" rot="R270"/>
 <instance part="X1" gate="G$1" x="-7.62" y="45.72" rot="R180"/>
-<instance part="SDA1" gate="1" x="12.7" y="60.96" rot="R270"/>
-<instance part="SDA2" gate="1" x="17.78" y="60.96" rot="R270"/>
-<instance part="SCL1" gate="1" x="22.86" y="60.96" rot="R270"/>
-<instance part="SCL2" gate="1" x="27.94" y="60.96" rot="R270"/>
-<instance part="5V1" gate="1" x="33.02" y="60.96" rot="R270"/>
-<instance part="5V2" gate="1" x="38.1" y="60.96" rot="R270"/>
-<instance part="GND1" gate="1" x="43.18" y="60.96" rot="R270"/>
-<instance part="GND2" gate="1" x="48.26" y="60.96" rot="R270"/>
+<instance part="SDA1" gate="1" x="12.7" y="76.2" rot="R270"/>
+<instance part="SDA2" gate="1" x="17.78" y="76.2" rot="R270"/>
+<instance part="SCL1" gate="1" x="22.86" y="76.2" rot="R270"/>
+<instance part="SCL2" gate="1" x="27.94" y="76.2" rot="R270"/>
+<instance part="5V1" gate="1" x="33.02" y="76.2" rot="R270"/>
+<instance part="5V2" gate="1" x="38.1" y="76.2" rot="R270"/>
+<instance part="GND1" gate="1" x="43.18" y="76.2" rot="R270"/>
+<instance part="GND2" gate="1" x="48.26" y="76.2" rot="R270"/>
+<instance part="POT_MODE" gate="G$1" x="-7.62" y="76.2" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -536,9 +538,13 @@ Based on  the following source:
 <wire x1="0" y1="27.94" x2="55.88" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="0" y1="27.94" x2="-17.78" y2="27.94" width="0.1524" layer="91"/>
 <junction x="0" y="27.94"/>
-<pinref part="POT" gate="G$1" pin="A"/>
+<pinref part="POT_SCREEN" gate="G$1" pin="A"/>
 <wire x1="-17.78" y1="27.94" x2="-17.78" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="60.96" x2="-12.7" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="60.96" x2="-17.78" y2="76.2" width="0.1524" layer="91"/>
+<junction x="-17.78" y="60.96"/>
+<pinref part="POT_MODE" gate="G$1" pin="A"/>
+<wire x1="-17.78" y1="76.2" x2="-12.7" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -547,20 +553,24 @@ Based on  the following source:
 <wire x1="2.54" y1="30.48" x2="43.18" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="30.48" x2="55.88" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="30.48" x2="2.54" y2="48.26" width="0.1524" layer="91"/>
-<pinref part="POT" gate="G$1" pin="E"/>
+<pinref part="POT_SCREEN" gate="G$1" pin="E"/>
 <wire x1="2.54" y1="48.26" x2="2.54" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="60.96" x2="-2.54" y2="60.96" width="0.1524" layer="91"/>
 <pinref part="X1" gate="G$1" pin="4"/>
 <wire x1="-5.08" y1="48.26" x2="2.54" y2="48.26" width="0.1524" layer="91"/>
 <junction x="2.54" y="48.26"/>
-<wire x1="43.18" y1="58.42" x2="43.18" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="73.66" x2="43.18" y2="66.04" width="0.1524" layer="91"/>
 <junction x="43.18" y="30.48"/>
-<wire x1="43.18" y1="50.8" x2="43.18" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="50.8" x2="48.26" y2="50.8" width="0.1524" layer="91"/>
-<junction x="43.18" y="50.8"/>
-<wire x1="48.26" y1="50.8" x2="48.26" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="66.04" x2="43.18" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="66.04" x2="48.26" y2="66.04" width="0.1524" layer="91"/>
+<junction x="43.18" y="66.04"/>
+<wire x1="48.26" y1="66.04" x2="48.26" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="GND1" gate="1" pin="P"/>
 <pinref part="GND2" gate="1" pin="P"/>
+<pinref part="POT_MODE" gate="G$1" pin="E"/>
+<wire x1="-2.54" y1="76.2" x2="2.54" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="2.54" y1="76.2" x2="2.54" y2="60.96" width="0.1524" layer="91"/>
+<junction x="2.54" y="60.96"/>
 </segment>
 </net>
 <net name="POT_CTRL" class="0">
@@ -569,18 +579,18 @@ Based on  the following source:
 <wire x1="55.88" y1="48.26" x2="7.62" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="7.62" y1="48.26" x2="7.62" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="7.62" y1="55.88" x2="-7.62" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="POT" gate="G$1" pin="S"/>
+<pinref part="POT_SCREEN" gate="G$1" pin="S"/>
 </segment>
 </net>
 <net name="SDA" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="A4"/>
 <wire x1="55.88" y1="45.72" x2="12.7" y2="45.72" width="0.1524" layer="91"/>
-<wire x1="12.7" y1="45.72" x2="12.7" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="12.7" y1="50.8" x2="17.78" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="50.8" x2="17.78" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="12.7" y1="50.8" x2="12.7" y2="58.42" width="0.1524" layer="91"/>
-<junction x="12.7" y="50.8"/>
+<wire x1="12.7" y1="45.72" x2="12.7" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="66.04" x2="17.78" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="66.04" x2="17.78" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="66.04" x2="12.7" y2="73.66" width="0.1524" layer="91"/>
+<junction x="12.7" y="66.04"/>
 <pinref part="SDA1" gate="1" pin="P"/>
 <pinref part="SDA2" gate="1" pin="P"/>
 </segment>
@@ -589,26 +599,37 @@ Based on  the following source:
 <segment>
 <pinref part="U$1" gate="G$1" pin="A5"/>
 <wire x1="55.88" y1="43.18" x2="22.86" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="43.18" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="50.8" x2="27.94" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="27.94" y1="50.8" x2="27.94" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="50.8" x2="22.86" y2="58.42" width="0.1524" layer="91"/>
-<junction x="22.86" y="50.8"/>
+<wire x1="22.86" y1="43.18" x2="22.86" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="66.04" x2="27.94" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="27.94" y1="66.04" x2="27.94" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="66.04" x2="22.86" y2="73.66" width="0.1524" layer="91"/>
+<junction x="22.86" y="66.04"/>
 <pinref part="SCL1" gate="1" pin="P"/>
 <pinref part="SCL2" gate="1" pin="P"/>
 </segment>
 </net>
 <net name="5V" class="0">
 <segment>
-<wire x1="38.1" y1="50.8" x2="38.1" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="50.8" x2="38.1" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="50.8" x2="33.02" y2="58.42" width="0.1524" layer="91"/>
-<junction x="33.02" y="50.8"/>
-<wire x1="33.02" y1="50.8" x2="33.02" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="38.1" y1="66.04" x2="38.1" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="66.04" x2="38.1" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="66.04" x2="33.02" y2="73.66" width="0.1524" layer="91"/>
+<junction x="33.02" y="66.04"/>
+<wire x1="33.02" y1="66.04" x2="33.02" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="U$1" gate="G$1" pin="5.5V"/>
 <wire x1="55.88" y1="35.56" x2="33.02" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="5V1" gate="1" pin="P"/>
 <pinref part="5V2" gate="1" pin="P"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="POT_MODE" gate="G$1" pin="S"/>
+<wire x1="-7.62" y1="71.12" x2="7.62" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="71.12" x2="7.62" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="58.42" x2="48.26" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="58.42" x2="48.26" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="A2"/>
+<wire x1="48.26" y1="50.8" x2="55.88" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
