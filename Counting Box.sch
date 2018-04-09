@@ -573,7 +573,7 @@ Based on  the following source:
 <junction x="2.54" y="60.96"/>
 </segment>
 </net>
-<net name="POT_CTRL" class="0">
+<net name="POT_SCREEN" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="A3"/>
 <wire x1="55.88" y1="48.26" x2="7.62" y2="48.26" width="0.1524" layer="91"/>
@@ -621,7 +621,7 @@ Based on  the following source:
 <pinref part="5V2" gate="1" pin="P"/>
 </segment>
 </net>
-<net name="N$5" class="0">
+<net name="POT_MODE" class="0">
 <segment>
 <pinref part="POT_MODE" gate="G$1" pin="S"/>
 <wire x1="-7.62" y1="71.12" x2="7.62" y2="71.12" width="0.1524" layer="91"/>
